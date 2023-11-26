@@ -13,16 +13,16 @@ import java.net.InetAddress;
 public class ConnectionGenius {
 
 	// The IP address for the game connection
-	private InetAddress ipAddress;
+	private InetAddress ipa;
 
 	/**
 	 * Constructs a ConnectionGenius object with the specified IP address.
 	 * 
-	 * @param ipAddress The InetAddress representing the IP address for the game
+	 * @param ipa The InetAddress representing the IP address for the game
 	 *            connection.
 	 */
 	public ConnectionGenius(InetAddress ipa) {
-		this.setIpa(ipAddress);
+		this.setIpa(ipa);
 	}
 
 	/**
@@ -72,16 +72,16 @@ public class ConnectionGenius {
 	 * @return The InetAddress representing the IP address.
 	 */
 	InetAddress getIpa() {
-		return ipAddress;
+		return ipa;
 	}
 
 	/**
 	 * Sets the IP address for the game connection.
 	 * 
-	 * @param ipAddress The InetAddress representing the IP address to be set.
+	 * @param ipa The InetAddress representing the IP address to be set.
 	 */
-	void setIpa(InetAddress ipAddress) {
-		this.ipAddress = ipAddress;
+	void setIpa(InetAddress ipa) {
+		this.ipa = ipa;
 	}
 
 }

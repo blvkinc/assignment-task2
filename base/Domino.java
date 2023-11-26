@@ -1,170 +1,169 @@
 package base;
 
 /**
- * Represents a domino tile with two numbers.
+ * The Domino class represents a domino with high and low values. It implements
+ * Comparable to support sorting of dominoes.
  * 
- * This class encapsulates the behavior and properties of a domino tile.
- * It includes methods for placement, inversion, comparison, and string representation.
- * 
- * @author Kevan Buckley, maintained by __student
- * @version 2.0, 2014
+ * Author: Kevan Buckley, maintained by __student Version: 2.0, 2014
  */
+
 public class Domino implements Comparable<Domino> {
-    private int high;
-    private int low;
-    private int hx;
-    private int hy;
-    private int lx;
-    private int ly;
-    private boolean placed = false;
+	private int high;
+	private int low;
+	private int hx;
+	private int hy;
+	private int lx;
+	private int ly;
+	private boolean placed = false;
 
-    /**
-     * Constructor for creating a domino with given high and low values.
-     * 
-     * @param high The higher value of the domino
-     * @param low  The lower value of the domino
-     */
-    public Domino(int high, int low) {
-        this.high = high;
-        this.low = low;
-    }
+	/**
+	 * Constructs a Domino object with specified high and low values.
+	 * 
+	 * @param high The high value of the domino.
+	 * @param low  The low value of the domino.
+	 */
+	public Domino(int high, int low) {
+		super();
+		this.setHigh(high);
+		this.setLow(low);
+	}
 
-    /**
-     * Places the domino on the board at specified coordinates.
-     * 
-     * @param higherX x-coordinate for the higher value
-     * @param higherY y-coordinate for the higher value
-     * @param lowerX  x-coordinate for the lower value
-     * @param lowerY  y-coordinate for the lower value
-     */
-    public void place(int higherX, int higherY, int lowerX, int lowerY) {
-        this.hx = higherX;
-        this.hy = higherY;
-        this.lx = lowerX;
-        this.ly = lowerY;
-        placed = true;
-    }
+	/**
+	 * Places the domino on the grid with specified coordinates.
+	 * 
+	 * @param hx The x-coordinate of the higher end.
+	 * @param hy The y-coordinate of the higher end.
+	 * @param lx The x-coordinate of the lower end.
+	 * @param ly The y-coordinate of the lower end.
+	 */
+	public void place(int hx, int hy, int lx, int ly) {
+		this.setHx(hx);
+		this.setHy(hy);
+		this.setLx(lx);
+		this.setLy(ly);
+		setPlaced(true);
+	}
 
-    /**
-     * Returns a string representation of the domino.
-     * 
-     * @return String representation of the domino
-     */
-    public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append("[");
-        result.append(high);
-        result.append(low);
-        result.append("]");
+	/**
+	 * Converts the domino to a string representation.
+	 * 
+	 * @return The string representation of the domino.
+	 */
+	public String toString() {
+		StringBuffer result = new StringBuffer();
+		result.append("[");
+		result.append(Integer.toString(getHigh()));
+		result.append(Integer.toString(getLow()));
+		result.append("]");
+		if (!isPlaced()) {
+			appendUnplacedInfo(result);
+		} else {
+			appendPlacedInfo(result);
+		}
+		return result.toString();
+	}
 
-        if (!placed) {
-            result.append(" unplaced");
-        } else {
-            result.append("(");
-            result.append(hx + 1);
-            result.append(",");
-            result.append(hy + 1);
-            result.append(")");
-            result.append("(");
-            result.append(lx + 1);
-            result.append(",");
-            result.append(ly + 1);
-            result.append(")");
-        }
-        return result.toString();
-    }
+	private void appendUnplacedInfo(StringBuffer result) {
+		result.append("unplaced");
+	}
 
-    /**
-     * Inverts the domino by rotating it 180 degrees clockwise.
-     */
-    public void invert() {
-        int tempX = hx;
-        hx = lx;
-        lx = tempX;
+	private void appendPlacedInfo(StringBuffer result) {
+		result.append("(");
+		result.append(Integer.toString(getHx() + 1));
+		result.append(",");
+		result.append(Integer.toString(getHy() + 1));
+		result.append(")");
+		result.append("(");
+		result.append(Integer.toString(getLx() + 1));
+		result.append(",");
+		result.append(Integer.toString(getLy() + 1));
+		result.append(")");
+	}
 
-        int tempY = hy;
-        hy = ly;
-        ly = tempY;
-    }
+	/**
+	 * Inverts the domino by turning it around 180 degrees clockwise.
+	 */
+	public void invert() {
+		int tx = getHx();
+		setHx(getLx());
+		setLx(tx);
 
-    /**
-     * Checks if the domino is placed horizontally.
-     * 
-     * @return True if the domino is placed horizontally, otherwise false
-     */
-    public boolean isHorizontal() {
-        return hy == ly;
-    }
+		int ty = getHy();
+		setHy(getLy());
+		setLy(ty);
+	}
 
-    // Getter and Setter methods for private fields
+	/**
+	 * Checks if the domino is horizontal.
+	 * 
+	 * @return true if the domino is horizontal, false otherwise.
+	 */
+	public boolean ishl() {
+		return getHy() == getLy();
+	}
 
-    public int getHigh() {
-        return high;
-    }
+	public int compareTo(Domino arg0) {
+		if (this.getHigh() < arg0.getHigh()) {
+			return 1;
+		}
+		return this.getLow() - arg0.getLow();
+	}
 
-    public void setHigh(int high) {
-        this.high = high;
-    }
+	// Getters and setters for high, low, hx, hy, lx, ly, and placed
+	public int getHigh() {
+		return high;
+	}
 
-    public int getLow() {
-        return low;
-    }
+	public void setHigh(int high) {
+		this.high = high;
+	}
 
-    public void setLow(int low) {
-        this.low = low;
-    }
+	public int getLow() {
+		return low;
+	}
 
-    public int getHx() {
-        return hx;
-    }
+	public void setLow(int low) {
+		this.low = low;
+	}
 
-    public void setHx(int hx) {
-        this.hx = hx;
-    }
+	public int getHx() {
+		return hx;
+	}
 
-    public int getHy() {
-        return hy;
-    }
+	public void setHx(int hx) {
+		this.hx = hx;
+	}
 
-    public void setHy(int hy) {
-        this.hy = hy;
-    }
+	public int getHy() {
+		return hy;
+	}
 
-    public int getLx() {
-        return lx;
-    }
+	public void setHy(int hy) {
+		this.hy = hy;
+	}
 
-    public void setLx(int lx) {
-        this.lx = lx;
-    }
+	public int getLx() {
+		return lx;
+	}
 
-    public int getLy() {
-        return ly;
-    }
+	public void setLx(int lx) {
+		this.lx = lx;
+	}
 
-    public void setLy(int ly) {
-        this.ly = ly;
-    }
+	public int getLy() {
+		return ly;
+	}
 
-    public boolean isPlaced() {
-        return placed;
-    }
+	public void setLy(int ly) {
+		this.ly = ly;
+	}
 
-    public void setPlaced(boolean placed) {
-        this.placed = placed;
-    }
+	public boolean isPlaced() {
+		return placed;
+	}
 
-    /**
-     * Compares this domino to another based on their high and low values.
-     * 
-     * @param other The other domino to compare with
-     * @return 1 if this domino's high value is less than the other, 
-     *         otherwise the comparison of their low values
-     */
-    public int compareTo(Domino other) {
-        if (this.high < other.high) {
-            return 1;
-        }
-        return this.low - other.low;
-    }
+	public void setPlaced(boolean placed) {
+		this.placed = placed;
+	}
+
 }

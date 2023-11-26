@@ -1,112 +1,95 @@
 package base;
 
 /**
- * Represents a location in space.
- * Manages the coordinates and angles of a point in space.
- * 
- * Coordinates are represented by xCoordinate and yCoordinate.
- * Angles are represented by theta and phi.
- * 
- * Provides methods to access and modify the coordinates and angles of a point in space.
+ * The SpacePlace class represents a point in space with both Cartesian and
+ * polar coordinates. It includes methods to get and set Cartesian coordinates
+ * and polar coordinates.
  * 
  * @author Kevan Buckley, maintained by __student
  * @version 2.0, 2014
  */
+
 public class SpacePlace {
-    private int xCoordinate; // Represents the x-coordinate of the point
-    private int yCoordinate; // Represents the y-coordinate of the point
-    private double theta; // Represents the angle theta
-    private double phi; // Represents the angle phi
+	// Cartesian coordinates
+	private int xOrg;
+	private int yOrg;
 
-    /**
-     * Default constructor initializing the coordinates to (0, 0).
-     */
-    public SpacePlace() {
-        xCoordinate = 0;
-        yCoordinate = 0;
-    }
+	// Polar coordinates
+	private PolarCoordinates polarCoordinates;
 
-    /**
-     * Constructor initializing the angles theta and phi.
-     * 
-     * @param theta The angle theta
-     * @param phi   The angle phi
-     */
-    public SpacePlace(double theta, double phi) {
-        this(); // Calls the default constructor to set coordinates to (0, 0)
-        this.theta = theta;
-        this.phi = phi;
-    }
+	/**
+	 * Default constructor initializes Cartesian coordinates to (0, 0) and polar
+	 * coordinates to (0.0, 0.0).
+	 */
+	public SpacePlace() {
+		xOrg = 0;
+		yOrg = 0;
+		polarCoordinates = new PolarCoordinates(0.0, 0.0);
+	}
 
-    /**
-     * Retrieves the x-coordinate of the point.
-     * 
-     * @return The x-coordinate
-     */
-    public int getXCoordinate() {
-        return xCoordinate;
-    }
+	/**
+	 * Constructor with polar coordinates parameter. Initializes Cartesian
+	 * coordinates to (0, 0) and sets the provided polar coordinates.
+	 * 
+	 * @param polarCoordinates The polar coordinates to set.
+	 */
+	public SpacePlace(PolarCoordinates polarCoordinates) {
+		this.xOrg = 0;
+		this.yOrg = 0;
+		this.polarCoordinates = polarCoordinates;
+	}
 
-    /**
-     * Sets the x-coordinate of the point.
-     * 
-     * @param xCoordinate The x-coordinate to set
-     */
-    public void setXCoordinate(int xCoordinate) {
-        this.xCoordinate = xCoordinate;
-    }
+	/**
+	 * Get the x-coordinate in Cartesian coordinates.
+	 * 
+	 * @return The x-coordinate.
+	 */
+	public int getxOrg() {
+		return xOrg;
+	}
 
-    /**
-     * Retrieves the y-coordinate of the point.
-     * 
-     * @return The y-coordinate
-     */
-    public int getYCoordinate() {
-        return yCoordinate;
-    }
+	/**
+	 * Set the x-coordinate in Cartesian coordinates.
+	 * 
+	 * @param xOrg The x-coordinate to set.
+	 */
+	public void setxOrg(int xOrg) {
+		this.xOrg = xOrg;
+	}
 
-    /**
-     * Sets the y-coordinate of the point.
-     * 
-     * @param yCoordinate The y-coordinate to set
-     */
-    public void setYCoordinate(int yCoordinate) {
-        this.yCoordinate = yCoordinate;
-    }
+	/**
+	 * Get the y-coordinate in Cartesian coordinates.
+	 * 
+	 * @return The y-coordinate.
+	 */
+	public int getyOrg() {
+		return yOrg;
+	}
 
-    /**
-     * Retrieves the angle theta.
-     * 
-     * @return The angle theta
-     */
-    public double getTheta() {
-        return theta;
-    }
+	/**
+	 * Set the y-coordinate in Cartesian coordinates.
+	 * 
+	 * @param yOrg The y-coordinate to set.
+	 */
+	public void setyOrg(int yOrg) {
+		this.yOrg = yOrg;
+	}
 
-    /**
-     * Sets the angle theta.
-     * 
-     * @param theta The angle theta to set
-     */
-    public void setTheta(double theta) {
-        this.theta = theta;
-    }
+	/**
+	 * Get the polar coordinates.
+	 * 
+	 * @return The polar coordinates.
+	 */
+	public PolarCoordinates getPolarCoordinates() {
+		return polarCoordinates;
+	}
 
-    /**
-     * Retrieves the angle phi.
-     * 
-     * @return The angle phi
-     */
-    public double getPhi() {
-        return phi;
-    }
-
-    /**
-     * Sets the angle phi.
-     * 
-     * @param phi The angle phi to set
-     */
-    public void setPhi(double phi) {
-        this.phi = phi;
-    }
+	/**
+	 * Set the polar coordinates.
+	 * 
+	 * @param polarCoordinates The polar coordinates to set.
+	 */
+	public void setPolarCoordinates(PolarCoordinates polarCoordinates) {
+		this.polarCoordinates = polarCoordinates;
+	}
 }

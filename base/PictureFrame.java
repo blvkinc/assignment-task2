@@ -1,96 +1,128 @@
 package base;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+/**
+ * @author Kevan Buckley, maintained by __student
+ * @version 2.0, 2014
+ */
 
 public class PictureFrame {
-    private int[] reroll = null;
-    private Main master = null;
-    private DominoPanel dp;
+//	public int[] reroll = null;
+	public Main master = null;
 
-    // Inner class representing the panel to display the grid
-    class DominoPanel extends JPanel {
-        private static final long serialVersionUID = 4190229282411119364L;
+	class DominoPanel extends JPanel {
+		private static final long serialVersionUID = 4190229282411119364L;
 
-        // Overrides the paintComponent method to paint the panel
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            drawBackground(g);
-            Location l = new Location(1, 2);
-            // Checks if the master object and its mode are valid
-            if (master != null && (master.mode == 1 || master.mode == 0)) {
-                l.drawGridLines(g);
-                drawHeadings(g);
-                drawGrid(g);
-                if (master.mode == 1) {
-                    master.drawGuesses(g);
-                } else {
-                    master.drawDominoes(g);
-                }
-            }
-        }
+		public void drawGrid(Graphics g) {
+			for (int are = 0; are < 7; are++) {
+				for (int see = 0; see < 8; see++) {
+					drawDigitGivenCentre(g, 30 + see * 20, 30 + are * 20, 20, master.grid[are][see]);
+				}
+			}
+		}
 
-        // Draws the background of the panel
-        private void drawBackground(Graphics g) {
-            g.setColor(Color.YELLOW);
-            g.fillRect(0, 0, getWidth(), getHeight());
-        }
+		public void drawHeadings(Graphics g) {
+			for (int are = 0; are < 7; are++) {
+				fillDigitGivenCentre(g, 10, 30 + are * 20, 20, are + 1);
+			}
 
-        // Draws the row and column headings
-        private void drawHeadings(Graphics g) {
-            for (int row = 0; row < 7; row++) {
-                fillDigitGivenCentre(g, 10, 30 + row * 20, 20, row + 1);
-            }
-            for (int col = 0; col < 8; col++) {
-                fillDigitGivenCentre(g, 30 + col * 20, 10, 20, col + 1);
-            }
-        }
+			for (int see = 0; see < 8; see++) {
+				fillDigitGivenCentre(g, 30 + see * 20, 10, 20, see + 1);
+			}
+		}
 
-        // Draws the grid based on the master's grid data
-        private void drawGrid(Graphics g) {
-            for (int row = 0; row < 7; row++) {
-                for (int col = 0; col < 8; col++) {
-                    drawDigitGivenCentre(g, 30 + col * 20, 30 + row * 20, 20, master.grid[row][col]);
-                }
-            }
-        }
+		public void drawDomino(Graphics g, Domino d) {
+			if (d.isPlaced()) {
+				int y = Math.min(d.getLy(), d.getHy());
+				int x = Math.min(d.getLx(), d.getHx());
+				int w = Math.abs(d.getLx() - d.getHx()) + 1;
+				int h = Math.abs(d.getLy() - d.getHy()) + 1;
+				g.setColor(Color.WHITE);
+				g.fillRect(20 + x * 20, 20 + y * 20, w * 20, h * 20);
+				g.setColor(Color.RED);
+				g.drawRect(20 + x * 20, 20 + y * 20, w * 20, h * 20);
+				drawDigitGivenCentre(g, 30 + d.getHx() * 20, 30 + d.getHy() * 20, 20, d.getHigh(), Color.BLUE);
+				drawDigitGivenCentre(g, 30 + d.getLx() * 20, 30 + d.getLy() * 20, 20, d.getLow(), Color.BLUE);
+			}
+		}
 
-        // Draws a digit at the specified position
-        private void drawDigitGivenCentre(Graphics g, int x, int y, int diameter, int n) {
-            int radius = diameter / 2;
-            g.setColor(Color.BLACK);
-            FontMetrics fm = g.getFontMetrics();
-            String txt = Integer.toString(n);
-            g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
-        }
+		void drawDigitGivenCentre(Graphics g, int x, int y, int diameter, int n) {
+			int radius = diameter / 2;
+			g.setColor(Color.BLACK);
+			// g.drawOval(x - radius, y - radius, diameter, diameter);
+			FontMetrics fm = g.getFontMetrics();
+			// convert the string to an integer
+			String txt = Integer.toString(n);
+			g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
+		}
 
-        // Fills a circle with a digit at the specified position
-        private void fillDigitGivenCentre(Graphics g, int x, int y, int diameter, int n) {
-            int radius = diameter / 2;
-            g.setColor(Color.GREEN);
-            g.fillOval(x - radius, y - radius, diameter, diameter);
-            g.setColor(Color.BLACK);
-            g.drawOval(x - radius, y - radius, diameter, diameter);
-            FontMetrics fm = g.getFontMetrics();
-            String txt = Integer.toString(n);
-            g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
-        }
-    }
+		void drawDigitGivenCentre(Graphics g, int x, int y, int diameter, int n, Color c) {
+			int radius = diameter / 2;
+			g.setColor(c);
+			// g.drawOval(x - radius, y - radius, diameter, diameter);
+			FontMetrics fm = g.getFontMetrics();
+			String txt = Integer.toString(n);
+			g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
+		}
 
-    // Constructor for the PictureFrame class
-    public PictureFrame(Main sf) {
-        master = sf;
-        JFrame f = new JFrame("Abominodo");
-        dp = new DominoPanel();
-        f.setContentPane(dp);
-        f.pack();
-        f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        f.setVisible(true);
-    }
+		void fillDigitGivenCentre(Graphics g, int x, int y, int diameter, int n) {
+			int radius = diameter / 2;
+			g.setColor(Color.GREEN);
+			g.fillOval(x - radius, y - radius, diameter, diameter);
+			g.setColor(Color.BLACK);
+			g.drawOval(x - radius, y - radius, diameter, diameter);
+			FontMetrics fm = g.getFontMetrics();
+			String txt = Integer.toString(n);
+			g.drawString(txt, x - fm.stringWidth(txt) / 2, y + fm.getMaxAscent() / 2);
+		}
 
-    // Method for resetting the frame, to be implemented if needed
-    public void reset() {
-        // TODO: Implement reset logic if needed
-    }
+		protected void paintComponent(Graphics g) {
+			g.setColor(Color.YELLOW);
+			g.fillRect(0, 0, getWidth(), getHeight());
+
+			Location l = new Location(1, 2);
+
+			if (master.mode == 1) {
+				paintComponentDraw(g, l);
+				master.drawGuesses(g);
+			}
+			if (master.mode == 0) {
+				paintComponentDraw(g, l);
+				master.drawDominoes(g);
+			}
+		}
+
+		private void paintComponentDraw(Graphics g, Location l) {
+			l.drawGridLines(g);
+			drawHeadings(g);
+			drawGrid(g);
+		}
+
+		public Dimension getPreferredSize() {
+			// the application window always prefers to be 202x182
+			return new Dimension(202, 182);
+		}
+	}
+
+	public DominoPanel dp;
+
+	public void PictureFrameAction(Main sf) {
+		master = sf;
+		if (dp == null) {
+			JFrame f = new JFrame("Abominodo");
+			dp = new DominoPanel();
+			f.setContentPane(dp);
+			f.pack();
+			f.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			f.setVisible(true);
+		}
+	}
+
 }
