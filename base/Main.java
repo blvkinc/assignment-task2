@@ -318,9 +318,9 @@ public class Main {
 			}
 			switch (_$_) {
 			case 5:
-				int index = (int) (Math.random() * (QuoteContent.stuff.length / 3));
-				String what = QuoteContent.stuff[index * 3];
-				String who = QuoteContent.stuff[1 + index * 3];
+				int index = (int) (Math.random() * (QuoteCollection.quotes.length / 3));
+				String what = QuoteCollection.quotes[index * 3];
+				String who = QuoteCollection.quotes[1 + index * 3];
 				System.out.printf("%s said \"%s\"", who, what);
 				System.out.println();
 				System.out.println();
