@@ -38,11 +38,11 @@ public class Main {
 
 	PictureFrame pf = new PictureFrame();
 
-	private void generateDominoes() {
+	void generateDominoes() {
 		_d = generateDominosList();
 	}
 
-	private void generateGuesses() {
+	void generateGuesses() {
 		_g = generateDominosList();
 	}
 
