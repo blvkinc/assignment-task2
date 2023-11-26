@@ -12,15 +12,16 @@ public class SpacePlace {
 	private double phi;
 
 	public SpacePlace() {
-		xOrg = 0;
-		yOrg = 0;
-	}
+        this(0, 0, 0.0, 0.0);
+    }
 
-	public SpacePlace(double theta, double phi) {
-		super();
-		this.theta = theta;
-		this.phi = phi;
-	}
+
+	public SpacePlace(int xOrg, int yOrg, double theta, double phi) {
+        this.xOrg = xOrg;
+        this.yOrg = yOrg;
+        this.theta = theta;
+        this.phi = phi;
+    }
 
 	public int getxOrg() {
 		return xOrg;
