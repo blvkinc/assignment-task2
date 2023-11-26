@@ -1,65 +1,49 @@
 package base;
 
 /**
- * Enum representing different language settings with associated messages.
- */
-public enum LanguageSetting {
-    ENGLISH("Enter your name:", "Welcome", "Have a good time playing Abominodo"),
-    KLINGON("'el lIj pong:", "nuqneH", "QaQ poH Abominodo");
-
-    private String[] messages;
-
-    LanguageSetting(String... messages) {
-        this.messages = messages;
-    }
-
-    /**
-     * Retrieves a message based on the index.
-     *
-     * @param index The index of the message to retrieve
-     * @return The message at the specified index
-     */
-    public String getMessage(int index) {
-        return messages[index];
-    }
-}
-
-/**
- * Represents a table of multilingual strings.
- * The class provides messages in different languages.
- * Manages the current language setting and message retrieval.
+ * The MultiLingualStringTable class provides a mechanism for managing and
+ * retrieving messages in different languages.
  * 
- * @author Kevan Buckley, maintained by __student
- * @version 2.0, 2014
+ * Author: Kevan Buckley, maintained by __student Version: 2.0, 2014
  */
+
 public class MultiLingualStringTable {
-    private static LanguageSetting currentLanguage = LanguageSetting.ENGLISH;
+	/**
+	 * Enumeration representing the available language settings.
+	 */
+	private enum LanguageSetting {
+		English, Klingon
+	}
 
-    /**
-     * Retrieves a message based on the index and current language setting.
-     *
-     * @param index The index of the message to retrieve
-     * @return The message in the selected language
-     */
-    public static String getMessage(int index) {
-        return currentLanguage.getMessage(index);
-    }
+	/**
+	 * The currently selected language setting.
+	 */
+	private static LanguageSetting currentSelectedLanguage = LanguageSetting.English;
 
-    /**
-     * Sets the current language.
-     *
-     * @param language The language setting to be set
-     */
-    public static void setCurrentLanguage(LanguageSetting language) {
-        currentLanguage = language;
-    }
+	/**
+	 * Array of messages in English language.
+	 */
+	private static String[] englishLanguageMessage = { "Enter your name:", "Welcome",
+			"Have a good time playing Abominodo" };
 
-    /**
-     * Gets the current language setting.
-     *
-     * @return The current language setting
-     */
-    public static LanguageSetting getCurrentLanguage() {
-        return currentLanguage;
-    }
+	/**
+	 * Array of messages in Klingon language.
+	 */
+	private static String[] klingonLanguageMessage = { "'el lIj pong:", "nuqneH", "QaQ poH Abominodo" };
+
+	/**
+	 * Retrieves the message at the specified index based on the current language
+	 * setting.
+	 *
+	 * @param index The index of the message to retrieve.
+	 * @return The message in the current language at the specified index.
+	 */
+	public static String getMessage(int index) {
+		if (currentSelectedLanguage == LanguageSetting.English) {
+			return englishLanguageMessage[index];
+		} else {
+			return klingonLanguageMessage[index];
+		}
+
+	}
 }
