@@ -1,6 +1,7 @@
 package base;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -11,15 +12,17 @@ import java.net.InetAddress;
  */
 
 public final class IOLibrary {
-	public static String getString() {
-		BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
-		do {
-			try {
-				return r.readLine();
-			} catch (Exception e) {
-			}
-		} while (true);
-	}
+    private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+    public static String getString() {
+        do {
+            try {
+                return reader.readLine();
+            } catch (IOException e) {
+                // Handle or log the exception
+            }
+        } while (true);
+    }
 
 	public static InetAddress getIPAddress() {
 		BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
