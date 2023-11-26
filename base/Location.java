@@ -11,43 +11,42 @@ import java.io.InputStreamReader;
  */
 
 public class Location extends SpacePlace {
-	public int c;
-	public int r;
-	public DIRECTION d;
-	public int tmp;
+	private int column;
+    private int row;
+    private Direction direction;
 
-	public enum DIRECTION {
-		VERTICAL, HORIZONTAL
-	};
+	public enum Direction {
+        VERTICAL, HORIZONTAL
+    };
 
-	public Location(int r, int c) {
-		this.r = r;
-		this.c = c;
-	}
+    public Location(int row, int column) {
+        this.row = row;
+        this.column = column;
+    }
 
-	public Location(int r, int c, DIRECTION d) {
-		this(r, c);
-		this.d = d;
-	}
+	public Location(int row, int column, Direction direction) {
+        this(row, column);
+        this.direction = direction;
+    }
 
 	public String toString() {
-		if (d == null) {
-			tmp = c + 1;
-			return "(" + (tmp) + "," + (r + 1) + ")";
-		} else {
-			tmp = c + 1;
-			return "(" + (tmp) + "," + (r + 1) + "," + d + ")";
-		}
+        if (direction == null) {
+            int tempCol = column + 1;
+            return "(" + tempCol + "," + (row + 1) + ")";
+        } else {
+            int tempCol = column + 1;
+            return "(" + tempCol + "," + (row + 1) + "," + direction + ")";
+        }
 	}
 
 	public void drawGridLines(Graphics g) {
-		g.setColor(Color.LIGHT_GRAY);
-		for (tmp = 0; tmp <= 7; tmp++) {
-			g.drawLine(20, 20 + tmp * 20, 180, 20 + tmp * 20);
-		}
-		for (int see = 0; see <= 8; see++) {
-			g.drawLine(20 + see * 20, 20, 20 + see * 20, 160);
-		}
+        g.setColor(Color.LIGHT_GRAY);
+        for (int tmp = 0; tmp <= 7; tmp++) {
+            g.drawLine(20, 20 + tmp * 20, 180, 20 + tmp * 20);
+        }
+        for (int see = 0; see <= 8; see++) {
+            g.drawLine(20 + see * 20, 20, 20 + see * 20, 160);
+        }
 	}
 
 	public static int getInt() {
