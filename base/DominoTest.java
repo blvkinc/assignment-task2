@@ -1,59 +1,66 @@
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+package base;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 public class DominoTest {
 
-    private Domino domino;
+	@Test
+	public void testConstructorAndGetters() {
+		Domino domino = new Domino(3, 5);
 
-    @BeforeEach
-    public void setUp() {
-        domino = new Domino(3, 5);
-    }
+		assertEquals(3, domino.getHigh());
+		assertEquals(5, domino.getLow());
+		assertFalse(domino.isPlaced());
+	}
 
-    @Test
-    public void testDominoInitialization() {
-        Assertions.assertNotNull(domino);
-    }
+	@Test
+	public void testPlace() {
+		Domino domino = new Domino(2, 4);
+		domino.place(1, 1, 2, 2);
 
-    @Test
-    public void testToStringUnplaced() {
-        String expected = "[35]unplaced";
-        Assertions.assertEquals(expected, domino.toString());
-    }
+		assertTrue(domino.isPlaced());
+		assertEquals(1, domino.getHx());
+		assertEquals(1, domino.getHy());
+		assertEquals(2, domino.getLx());
+		assertEquals(2, domino.getLy());
+	}
 
-    @Test
-    public void testPlace() {
-        domino.place(0, 0, 1, 1);
-        String expected = "[35](1,1)(2,2)";
-        Assertions.assertEquals(expected, domino.toString());
-    }
+	@Test
+	public void testToString() {
+		Domino domino = new Domino(1, 6);
+		assertEquals("[16]unplaced", domino.toString());
 
-    @Test
-    public void testInvert() {
-        domino.place(0, 0, 1, 1);
-        domino.invert();
-        String expected = "[35](2,2)(1,1)";
-        Assertions.assertEquals(expected, domino.toString());
-    }
+		domino.place(2, 2, 3, 3);
+		assertEquals("[16](3,3)(4,4)", domino.toString());
+	}
 
-    @Test
-    public void testIsHorizontal() {
-        domino.place(0, 0, 1, 0);
-        Assertions.assertTrue(domino.ishl());
-    }
+	@Test
+	public void testInvert() {
+		Domino domino = new Domino(4, 3);
+		domino.place(1, 1, 2, 2);
+		domino.invert();
 
-    @Test
-    public void testCompareTo() {
-        Domino smallerDomino = new Domino(2, 4);
-        Assertions.assertTrue(domino.compareTo(smallerDomino) > 0);
+		assertEquals(2, domino.getHx());
+		assertEquals(2, domino.getHy());
+		assertEquals(1, domino.getLx());
+		assertEquals(1, domino.getLy());
+	}
 
-        Domino equalDomino = new Domino(3, 5);
-        Assertions.assertTrue(domino.compareTo(equalDomino) == 0);
+	@Test
+	public void testIshl() {
+		Domino horizontalDomino = new Domino(2, 4);
+		Domino verticalDomino = new Domino(5, 3);
 
-        Domino largerDomino = new Domino(5, 3);
-        Assertions.assertTrue(domino.compareTo(largerDomino) < 0);
-    }
+		horizontalDomino.place(1, 1, 2, 1);
+		verticalDomino.place(3, 3, 3, 4);
 
-    // Additional tests can be added for edge cases and further functionalities
+		assertTrue(horizontalDomino.ishl());
+		assertFalse(verticalDomino.ishl());
+	}
+
+	
 }

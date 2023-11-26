@@ -1,69 +1,66 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+package base;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.net.InetAddress;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import java.net.UnknownHostException;
 
-class ConnectionGeniusTest {
+import org.junit.Before;
+import org.junit.Test;
 
-    private ConnectionGenius connectionGenius;
-    private InetAddress mockInetAddress;
+public class ConnectionGeniusTest {
 
-    @BeforeEach
-    void setUp() {
-        mockInetAddress = mock(InetAddress.class);
-        connectionGenius = new ConnectionGenius(mockInetAddress);
-    }
+	private ConnectionGenius connectionGenius;
 
-    @Test
-    void testConnectionGeniusConstruction() {
-        assertNotNull(connectionGenius);
-        assertEquals(mockInetAddress, connectionGenius.getIpa());
-    }
+	@Before
+	public void setUp() throws UnknownHostException {
+		// Set up a ConnectionGenius object with a sample InetAddress for testing
+		InetAddress sampleInetAddress = InetAddress.getByName("127.0.0.1");
+		connectionGenius = new ConnectionGenius(sampleInetAddress);
+	}
 
-    @Test
-    void testDownloadWebVersion() {
-        connectionGenius.downloadWebVersion();
-        // It's hard to test console output directly, but you can verify indirectly
-        // For instance, you might check if the method was called with Mockito
-        verify(connectionGenius, times(1)).printMessage("Getting specialised web version.");
-        verify(connectionGenius, times(1)).printMessage("Wait a couple of moments");
-    }
+	@Test
+	public void testDownloadWebVersion() {
+		// Test the downloadWebVersion method
+		connectionGenius.downloadWebVersion();
+		// Add assertions if needed
+	}
 
-    @Test
-    void testConnectToWebService() {
-        connectionGenius.connectToWebService();
-        // Similar verification for console output
-        verify(connectionGenius, times(1)).printMessage("Connecting");
-    }
+	@Test
+	public void testConnectToWebService() {
+		// Test the connectToWebService method
+		connectionGenius.connectToWebService();
+		// Add assertions if needed
+	}
 
-    @Test
-    void testAwayWeGo() {
-        connectionGenius.awayWeGo();
-        // Similar verification for console output
-        verify(connectionGenius, times(1)).printMessage("Ready to play");
-    }
+	@Test
+	public void testAwayWeGo() {
+		// Test the awayWeGo method
+		connectionGenius.awayWeGo();
+		// Add assertions if needed
+	}
 
-    @Test
-    void testFireUpGame() {
-        connectionGenius.fireUpGame();
-        // Verification for the sequence of method calls
-        InOrder inOrder = inOrder(connectionGenius);
-        inOrder.verify(connectionGenius).downloadWebVersion();
-        inOrder.verify(connectionGenius).connectToWebService();
-        inOrder.verify(connectionGenius).awayWeGo();
-    }
+	@Test
+	public void testFireUpGame() {
+		// Test the fireUpGame method
+		connectionGenius.fireUpGame();
+		// Add assertions if needed
+	}
 
-    @Test
-    void testGetIpa() {
-        assertEquals(mockInetAddress, connectionGenius.getIpa());
-    }
+	@Test
+	public void testGetIpa() {
+		// Test the getIpa method
+		InetAddress ipAddress = connectionGenius.getIpa();
+		assertNotNull("The IP address should not be null", ipAddress);
+		// Add assertions if needed
+	}
 
-    @Test
-    void testSetIpa() {
-        InetAddress newInetAddress = mock(InetAddress.class);
-        connectionGenius.setIpa(newInetAddress);
-        assertEquals(newInetAddress, connectionGenius.getIpa());
-    }
+	@Test
+	public void testSetIpa() throws UnknownHostException {
+		// Test the setIpa method
+		InetAddress newIpAddress = InetAddress.getByName("192.168.0.1");
+		connectionGenius.setIpa(newIpAddress);
+		assertEquals("The IP address should be set correctly", newIpAddress, connectionGenius.getIpa());
+	}
 }

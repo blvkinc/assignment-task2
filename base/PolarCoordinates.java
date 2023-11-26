@@ -19,4 +19,13 @@ class PolarCoordinates {
 	public double getPhi() {
 		return phi;
 	}
+
+	public double getRadius() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public double getAngle() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
